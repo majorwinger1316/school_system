@@ -1,5 +1,6 @@
 import java.awt.EventQueue;
 
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
@@ -20,6 +21,8 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.sql.Date;
 
 
@@ -34,12 +37,19 @@ public class New_Admission {
    private static JComboBox<String> comboBox;
     
    private static void populateComboBox() {
-	   comboBox = new JComboBox<>();
 	    try (Connection connection = DriverManager.getConnection(url, username, password)) {
-	        DatabaseMetaData metaData = (DatabaseMetaData) connection.getMetaData();
-	        ResultSet resultSet = metaData.getTables(Database_Manager.getInstance().getSelectedDatabase() , null, "%", new String[]{"TABLE"});
-	        while (resultSet.next()) {
-	            comboBox.addItem(resultSet.getString("TABLE_NAME"));
+	        String query = "SELECT class FROM classes";
+	        try (PreparedStatement preparedStatement = connection.prepareStatement(query);
+	             ResultSet resultSet = preparedStatement.executeQuery()) {
+
+	            List<String> classNames = new ArrayList<>();
+	            while (resultSet.next()) {
+	                String className = resultSet.getString("class");
+	                classNames.add(className);
+	            }
+
+	            DefaultComboBoxModel<String> comboBoxModel = new DefaultComboBoxModel<>(classNames.toArray(new String[0]));
+	            comboBox.setModel(comboBoxModel);
 	        }
 	    } catch (SQLException e) {
 	        e.printStackTrace();
@@ -161,15 +171,16 @@ public class New_Admission {
 		    try {
 		            if (name.getText().length() > 0 && scholar.getText().length() > 0 && father.getText().length() > 0 && mother.getText().length() > 0 && address.getText().length() > 0 && mobile.getText().length() > 0) {
 		                
-		                    String insertSQL = "INSERT INTO " + comboBox.getSelectedItem() + "(name, scholar_num, DOB, father_name, mother_name, address, mobile_num) VALUES (?, ?, ?, ?, ?, ?, ?)";
+		                    String insertSQL = "INSERT INTO students(class, student_name, scholar_num, DOB, father_name, mother_name, address, mobile_num) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 		                    PreparedStatement preparedStatement = connection.prepareStatement(insertSQL);
-		                    preparedStatement.setString(1, name.getText());
-		                    preparedStatement.setInt(2, Integer.parseInt(scholar.getText()));
-		                    preparedStatement.setDate(3, sqlDate);
-		                    preparedStatement.setString(4, father.getText());
-		                    preparedStatement.setString(5, mother.getText());
-		                    preparedStatement.setString(6, address.getText());
-		                    preparedStatement.setString(7, mobile.getText());
+		                    preparedStatement.setInt(1, Integer.parseInt((String) comboBox.getSelectedItem()));
+		                    preparedStatement.setString(2, name.getText());
+		                    preparedStatement.setInt(3, Integer.parseInt(scholar.getText()));
+		                    preparedStatement.setDate(4, sqlDate);
+		                    preparedStatement.setString(5, father.getText());
+		                    preparedStatement.setString(6, mother.getText());
+		                    preparedStatement.setString(7, address.getText());
+		                    preparedStatement.setString(8, mobile.getText());
 		                    preparedStatement.executeUpdate();
 		                    JOptionPane.showMessageDialog(frame, "Submitted", "", JOptionPane.INFORMATION_MESSAGE);
 		            }

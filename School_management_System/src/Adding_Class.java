@@ -58,24 +58,16 @@ public class Adding_Class {
 			public void actionPerformed(ActionEvent e) {
 
 		        if (textField.getText().length() == 0) {
-		            JOptionPane.showMessageDialog(frame, "Table name and number of columns cannot be empty.", "Error", JOptionPane.ERROR_MESSAGE);
+		            JOptionPane.showMessageDialog(frame, "Cannot be emplty", "Error", JOptionPane.ERROR_MESSAGE);
 		            return;
 		        }
 
 		        try (Connection connection = DriverManager.getConnection(url, username, password)) {
 		            java.sql.Statement statement = connection.createStatement();
-		            int numColumns = 8;
-		            StringBuilder columnsBuilder = new StringBuilder("sno INT AUTO_INCREMENT PRIMARY KEY");
-		            
-		            for (int i = 1; i <= numColumns; i++) {
-		                columnsBuilder.append(", column").append(i).append(" VARCHAR(255)");
-		            }
+		
 
-		            String sql = "CREATE TABLE `" + textField.getText() + "`" +
-		                    " (s_no INT AUTO_INCREMENT PRIMARY KEY, " +
-		                    "name VARCHAR(45), " +
-		                    "scholar_num VARCHAR(45) UNIQUE, " +
-		                    "DOB VARCHAR(45), " + "father_name VARCHAR(45), " + "mother_name VARCHAR(45)," + "address VARCHAR(100), " + "mobile_num VARCHAR(10))";
+		            String sql = "INSERT INTO classes (class) VALUES " + "('" + textField.getText() + "')";
+
 		            statement.executeUpdate(sql);
 		            
 		            JOptionPane.showMessageDialog(frame, "Table created successfully", "Success", JOptionPane.INFORMATION_MESSAGE);

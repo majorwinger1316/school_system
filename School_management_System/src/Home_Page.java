@@ -1,13 +1,12 @@
 import java.awt.*;
-
 import java.sql.*;
 import javax.swing.*;
-
 import com.mysql.cj.jdbc.DatabaseMetaData;
 import java.sql.SQLException;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.event.ActionEvent;
-
 
 public class Home_Page {
 	public static void main(String[] args) {
@@ -15,7 +14,6 @@ public class Home_Page {
 		frame.setVisible(true);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setBounds(100, 100, 450, 300);
-		
 		frame.getContentPane().setLayout(null);
 		
 		JPanel panel = new JPanel();
@@ -65,7 +63,7 @@ public class Home_Page {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				frame.dispose();
-				Search_fee fee = new Search_fee();
+				Get_Fee fee = new Get_Fee();
 				fee.main(null);
 			}
 		});
@@ -102,7 +100,7 @@ public class Home_Page {
 		JButton btnNewButton_5 = new JButton("New Database");
 		btnNewButton_5.setBackground(new Color(124, 147, 195));
 		btnNewButton_5.setFont(new Font("Futura", Font.PLAIN, 17));
-		btnNewButton_5.setBounds(291, 79, 141, 71);
+		btnNewButton_5.setBounds(290, 153, 142, 71);
 		btnNewButton_5.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -127,10 +125,18 @@ public class Home_Page {
 		});
 		panel.add(btnNewButton_6);
 		
-		JButton btnNewButton_7 = new JButton("Fee Heads");
+		JButton btnNewButton_7 = new JButton("Edit Fee");
 		btnNewButton_7.setBackground(new Color(124, 147, 195));
 		btnNewButton_7.setFont(new Font("Futura", Font.PLAIN, 17));
-		btnNewButton_7.setBounds(290, 153, 142, 71);
+		btnNewButton_7.setBounds(291, 79, 141, 71);
+		btnNewButton_7.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				frame.dispose();
+				Edit_Fee edit = new Edit_Fee();
+				edit.main(null);
+			}
+		});
 		panel.add(btnNewButton_7);
 		
 		JButton btnNewButton_8 = new JButton("Print");
@@ -144,6 +150,21 @@ public class Home_Page {
 		lblNewLabel.setBounds(6, 236, 426, 16);
 		panel.add(lblNewLabel);
 		
+		panel.setFocusable(true);
+		btnNewButton.setFocusable(true);
+		btnNewButton_1.setFocusable(true);
+		btnNewButton_2.setFocusable(true);
+		btnNewButton_3.setFocusable(true);
+		btnNewButton_4.setFocusable(true);
+		btnNewButton_5.setFocusable(true);
+		btnNewButton_6.setFocusable(true);
+		btnNewButton_7.setFocusable(true);
+		btnNewButton_8.setFocusable(true);
+
+
+		
 		frame.setVisible(true);
 	}
+
+
 }

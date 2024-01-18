@@ -59,13 +59,13 @@ public class Collec {
 		lblNewLabel.setBounds(6, 6, 350, 23);
 		panel.add(lblNewLabel);
 		
-		JLabel lblNewLabel_1 = new JLabel("Class:");
+		JLabel lblNewLabel_1 = new JLabel("Scholar no.:");
 		lblNewLabel_1.setFont(new Font("Futura", Font.PLAIN, 17));
-		lblNewLabel_1.setBounds(97, 41, 61, 23);
+		lblNewLabel_1.setBounds(62, 41, 96, 23);
 		panel.add(lblNewLabel_1);
 		
 		textField = new JTextField();
-		textField.setBounds(170, 42, 78, 23);
+		textField.setBounds(170, 42, 130, 23);
 		panel.add(textField);
 		textField.setColumns(10);
 		

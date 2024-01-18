@@ -29,9 +29,9 @@ public class Search_fee {
 		lblNewLabel.setBounds(6, 6, 350, 23);
 		panel.add(lblNewLabel);
 		
-		JLabel lblNewLabel_1 = new JLabel("Class:");
+		JLabel lblNewLabel_1 = new JLabel("Scholar no.:");
 		lblNewLabel_1.setFont(new Font("Futura", Font.PLAIN, 17));
-		lblNewLabel_1.setBounds(97, 41, 61, 23);
+		lblNewLabel_1.setBounds(62, 41, 96, 23);
 		panel.add(lblNewLabel_1);
 		
 		JTextField textField = new JTextField();
@@ -42,6 +42,15 @@ public class Search_fee {
 		JButton btnNewButton = new JButton("Search");
 		btnNewButton.setFont(new Font("Futura", Font.PLAIN, 17));
 		btnNewButton.setBounds(41, 77, 117, 29);
+
+        btnNewButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String scholarNumber = textField.getText();
+                Get_Fee getFeeInstance = new Get_Fee();
+                getFeeInstance.fetchStudentInfo(scholarNumber);
+            }
+        });
 		panel.add(btnNewButton);
 		
 		JButton btnNewButton_1 = new JButton("Back");

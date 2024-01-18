@@ -97,6 +97,7 @@ public class Login_Page{
 		JButton btnNewButton = new JButton("LOGIN");
 		btnNewButton.setFont(new Font("Futura", Font.PLAIN, 13));
 		btnNewButton.setBounds(155, 103, 117, 29);
+		frame.getRootPane().setDefaultButton(btnNewButton);
 	    btnNewButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

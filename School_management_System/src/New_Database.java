@@ -57,22 +57,35 @@ public class New_Database {
 		            return;
 		        }
 
-		        try (Connection connection = DriverManager.getConnection(url, username, password)) {
-		            java.sql.Statement statement = connection.createStatement();
+				try (Connection connection = DriverManager.getConnection(url, username, password)) {
+                    java.sql.Statement statement = connection.createStatement();
 
-		            String sql = "CREATE DATABASE `" + textField.getText() + "`";
-		            statement.executeUpdate(sql);
+                    // Specify the database to use
+                    statement.executeUpdate("CREATE DATABASE IF NOT EXISTS `" + textField.getText() + "`");
+                    statement.executeUpdate("USE `" + textField.getText() + "`");
 
-		            
-		            JOptionPane.showMessageDialog(frame, "Schema created successfully.", "Success", JOptionPane.INFORMATION_MESSAGE);
-		        } catch (SQLException ex) {
-		            JOptionPane.showMessageDialog(frame, "Error creating schema: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-		            ex.printStackTrace();
-		        }
-		    }
+                    // Continue with table creation statements
+                    statement.executeUpdate("CREATE TABLE IF NOT EXISTS classes (" + "class INT PRIMARY KEY NOT NULL)");
 
-		});
-		panel.add(btnNewButton);
+                    statement.executeUpdate("CREATE TABLE IF NOT EXISTS fees (" + "invoice_num INT PRIMARY KEY AUTO_INCREMENT NOT NULL,"
+                            + "date DATE NOT NULL," + "scholar_num INT," + "admission_fee INT,"
+                            + "tution_fee INT NOT NULL," + "exam_fee INT," + "annual_charges INT," + "total INT)");
+
+                    statement.executeUpdate("CREATE TABLE IF NOT EXISTS students (" + "scholar_num INT PRIMARY KEY NOT NULL,"
+                            + "class INT," + "student_name VARCHAR(100) NOT NULL," + "father_name VARCHAR(100),"
+                            + "mother_name VARCHAR(100)," + "DOB VARCHAR(45)," + "address VARCHAR(100),"
+                            + "mobile_num VARCHAR(10))");
+
+                    JOptionPane.showMessageDialog(frame, "Schema created successfully.", "Success",
+                            JOptionPane.INFORMATION_MESSAGE);
+                } catch (SQLException ex) {
+                    JOptionPane.showMessageDialog(frame, "Error creating schema: " + ex.getMessage(), "Error",
+                            JOptionPane.ERROR_MESSAGE);
+                    ex.printStackTrace();
+                }
+            }
+        });
+        panel.add(btnNewButton);
 		
 		JButton btnNewButton_1 = new JButton("Back");
 		btnNewButton_1.setFont(new Font("Futura", Font.PLAIN, 13));
