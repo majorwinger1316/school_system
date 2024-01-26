@@ -4,6 +4,9 @@ import javax.swing.JPanel;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
+
+import com.mysql.cj.jdbc.DatabaseMetaData;
+
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -76,6 +79,16 @@ public class New_Database {
                             + "mother_name VARCHAR(100)," + "DOB VARCHAR(45)," + "address VARCHAR(100),"
                             + "mobile_num VARCHAR(10))");
 
+                   
+
+                    
+                    statement.executeUpdate("INSERT INTO classes SELECT class FROM `" + Database_Manager.getInstance().getSelectedDatabase() + "`.`classes`");
+
+                    // Auto-fill students table
+                    statement.executeUpdate("INSERT INTO students (scholar_num, class, student_name, father_name, mother_name, DOB, address, mobile_num) " +
+                            "SELECT scholar_num, class + 1, student_name, father_name, mother_name, DOB, address, mobile_num " +
+                            "FROM `" + Database_Manager.getInstance().getSelectedDatabase() + "`.`students` WHERE class < 5");
+                    
                     JOptionPane.showMessageDialog(frame, "Schema created successfully.", "Success",
                             JOptionPane.INFORMATION_MESSAGE);
                 } catch (SQLException ex) {
